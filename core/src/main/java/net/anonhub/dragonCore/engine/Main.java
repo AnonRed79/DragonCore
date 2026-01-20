@@ -9,15 +9,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import net.anonhub.dragonCore.engine.interfaces.IKeyMethod;
-import net.anonhub.dragonCore.engine.interfaces.ITickable;
 import net.anonhub.dragonCore.entityEngine.Entity;
 import net.anonhub.dragonCore.guiEngine.Terminal;
-import net.anonhub.dragonCore.guiEngine.TextDisplay;
-import net.anonhub.dragonCore.modules.base_module.Mod;
+import net.anonhub.dragonCore.moddingEngine.Modder;
 import net.anonhub.dragonCore.tagEngine.Tag;
 import net.anonhub.dragonCore.tagEngine.Tags;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.anonhub.dragonCore.engine.Settings.logger;
@@ -25,15 +22,13 @@ import static net.anonhub.dragonCore.entityEngine.Entity.entities;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
-    public static final ArrayList<ITickable> tickables = new ArrayList<>();
 //    public static final ArrayList<String> modules = new ArrayList<>();
 
     public Settings settings;
-
     private static Renders renders;
-
     public static DataDisplay dataDisplay;
     public static Terminal terminalInput;
+    public static Modder modder;
 
     @Override
     public void create() {
@@ -43,9 +38,6 @@ public class Main extends ApplicationAdapter {
         terminalInput = new Terminal(renders);
         dataDisplay = new DataDisplay(renders);
         dataDisplay.setTitle("Data Display:");
-
-        new Mod(renders);
-
 
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
@@ -90,7 +82,12 @@ public class Main extends ApplicationAdapter {
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
                 return super.touchUp(screenX, screenY, pointer, button);
             }
+
+
         });
+
+        modder = new Modder(renders);
+        modder.mod();
     }
 
     @Override
@@ -153,46 +150,4 @@ public class Main extends ApplicationAdapter {
 
 
 
-//    TODO
-//    public static void loadModules(File modulesDir) {
-//        if (!modulesDir.exists() || !modulesDir.isDirectory()) return;
-//
-//        File[] jarFiles = modulesDir.listFiles((dir, name) -> name.endsWith(".jar"));
-//        if (jarFiles == null) return;
-//
-//        for (File jar : jarFiles) {
-//            try {
-//                URL jarUrl = jar.toURI().toURL();
-//                URLClassLoader classLoader = new URLClassLoader(new URL[]{jarUrl}, net.anonhub.dragonCore.engine.Main.class.getClassLoader());
-//
-//                try (JarFile jarFile = new JarFile(jar)) {
-//                    JarEntry entry = jarFile.getJarEntry("main.meta");
-//                    if (entry == null) continue;
-//
-//                    InputStream input = jarFile.getInputStream(entry);
-//                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-//                    String className = reader.readLine().trim(); // e.g. net.anonhub.base_module.module
-//
-//                    Class<?> clazz = classLoader.loadClass(className);
-//                    Object instance = clazz.getDeclaredConstructor().newInstance();
-//                    if (instance instanceof ITickable) {
-//                        tickables.add((ITickable) instance);
-////                        modules.add(className);
-//                        Settings.display.println("Loaded module: " + className);
-//                    } else {
-//                        Settings.display.println("Class " + className + " does not implement ITickable, skipping.");
-//                    }
-//                    System.out.println("Loaded module: " + className);
-//
-//                } catch (Exception e) {
-//                    System.err.println("Failed to load module from " + jar.getName());
-//                    e.printStackTrace();
-//                }
-//
-//            } catch (Exception e) {
-//                System.err.println("Failed to process jar: " + jar.getName());
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 }

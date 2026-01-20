@@ -3,6 +3,10 @@ package net.anonhub.dragonCore.guiEngine;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import net.anonhub.dragonCore.engine.Renders;
 
+import java.util.ArrayList;
+
+import static net.anonhub.dragonCore.engine.Settings.logger;
+
 /**
  * A combination of a StringBuilder and GlyphLayout
  */
@@ -10,25 +14,13 @@ public class GlyphBuilder{
     private StringBuilder text = new StringBuilder();
     private Renders renders;
 
-    public GlyphBuilder(Renders renders, char character) {
-        text.append(character);
-        this.renders = renders;
-    }
-    public GlyphBuilder(Renders renders, String str) {
-        text.append(str);
-        this.renders = renders;
-    }
-    public GlyphBuilder(Renders renders, StringBuilder str) {
-        text.append(str);
+
+    public GlyphBuilder(Renders renders, Object obj) {
+        text.append(obj.toString());
         this.renders = renders;
     }
     public GlyphBuilder(Renders renders) {
         this.renders = renders;
-    }
-
-    public GlyphBuilder(Renders renders, GlyphBuilder glyphBuilder) {
-        this.renders = renders;
-        this.text = glyphBuilder.text;
     }
 
     /**
@@ -148,11 +140,20 @@ public class GlyphBuilder{
      * @throws     IndexOutOfBoundsException  if {@code index} is
      *             negative or greater than or equal to {@code length()}.
      */
-    public char charAt(int index) throws IndexOutOfBoundsException{
-        if (length() >= index) {
-            throw new IndexOutOfBoundsException();
+    public char charAt(int index) {
+        if (index >= length() && length()!=0) {
+            throw new IndexOutOfBoundsException("index "+index+" out of bounds for length "+length());
         }
         return text.charAt(index);
+    }
+
+    /**
+     * compares a char to the first char in the text
+     * @param c
+     * @return if c == first char: true else: false
+     */
+    public boolean startWith(char c) {
+        return c==charAt(0);
     }
 
     @Override
@@ -160,6 +161,10 @@ public class GlyphBuilder{
         return text.toString();
     }
 
+    /**
+     * deletes all text in this {@code GlyphBuilder}
+     * @return this {@code GlyphBuilder}
+     */
     public GlyphBuilder clear() {
         text.delete(0, length());
         return this;

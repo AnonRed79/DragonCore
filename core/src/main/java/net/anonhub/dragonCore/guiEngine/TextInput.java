@@ -2,18 +2,21 @@ package net.anonhub.dragonCore.guiEngine;
 
 import net.anonhub.dragonCore.engine.Renders;
 
+import static net.anonhub.dragonCore.engine.Settings.ticker;
+
 public class TextInput {
     protected GlyphBuilder text;
     protected Renders renders;
     protected int currentIndex;
-    protected int lineIndex;
     protected TextDisplay history;
+    protected final GlyphBuilder cursor;
+
 
     public TextInput(Renders renders) {
         this.renders = renders;
         this.text = new GlyphBuilder(renders);
         this.currentIndex = 0;
-        this.lineIndex = 0;
+        this.cursor = new GlyphBuilder(renders).setText("|");
         history = null;
     }
 
@@ -21,7 +24,7 @@ public class TextInput {
         this.renders = renders;
         this.text = new GlyphBuilder(renders);
         this.currentIndex = 0;
-        this.lineIndex = 0;
+        this.cursor = new GlyphBuilder(renders).setText("|");
         this.history = history;
     }
 
@@ -59,6 +62,10 @@ public class TextInput {
         return this;
     }
 
+    /**
+     *
+     * @return the text that was entered
+     */
     public GlyphBuilder enter() {
         GlyphBuilder text = this.text;
         this.text.clear();
@@ -70,6 +77,9 @@ public class TextInput {
      * Renders the text in the game window at the specified coordinates with a cursor
      */
     public void draw(float x, float y) {
+        if (ticker.getSessionTick()%20<=8) {
+            cursor.draw(x+text.substring(0,currentIndex).getWidth(),y);
+        }
         text.draw(x, y);
     }
 
@@ -147,33 +157,4 @@ public class TextInput {
             "\nIndex: "+currentIndex;
     }
 
-    public int decreaseLineIndex(int amount) {
-        if (history==null) {
-            return -1;
-        }
-        lineIndex = amount;
-        if (lineIndex < 0) {
-            lineIndex = 0;
-        }
-        return lineIndex;
-    }
-
-    public int decreaseLineIndex() {
-        return decreaseLineIndex(1);
-    }
-
-    public int increaseLineIndex(int amount) {
-        if (history==null) {
-            return -1;
-        }
-        lineIndex = amount;
-        if (lineIndex > history.size()) {
-            lineIndex = history.size();
-        }
-        return lineIndex;
-    }
-
-    public int increaseLineIndex() {
-        return increaseLineIndex(1);
-    }
 }

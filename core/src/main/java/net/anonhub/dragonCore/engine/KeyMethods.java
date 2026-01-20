@@ -188,13 +188,11 @@ public class KeyMethods {
         });
         keyDownMethods.add((int keyCode)-> {
             if (keyCode == Input.Keys.UP && subMode.terminal) {
-//                TODO
                 terminalInput.increaseLineIndex();
             }
         });
         keyDownMethods.add((int keyCode)-> {
             if (keyCode == Input.Keys.DOWN && subMode.terminal) {
-//                TODO
                 terminalInput.decreaseLineIndex();
             }
         });

@@ -1,6 +1,5 @@
 package net.anonhub.dragonCore.guiEngine;
 
-import com.badlogic.gdx.Gdx;
 import net.anonhub.dragonCore.engine.Renders;
 
 import java.util.ArrayList;
@@ -88,6 +87,13 @@ public class TextDisplay {
      */
     public void setTitle(Object obj) {
         this.title.setText(obj);
+    }
+
+    public void setMaxLines(int maxLines) {
+        if (maxLines < 1) {
+            throw new IllegalArgumentException("max lines must be at least 1");
+        }
+        this.maxLines = maxLines;
     }
 
     public int size() {
