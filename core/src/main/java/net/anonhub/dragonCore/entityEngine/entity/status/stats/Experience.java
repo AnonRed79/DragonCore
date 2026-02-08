@@ -3,14 +3,14 @@ package net.anonhub.dragonCore.entityEngine.entity.status.stats;
 import net.anonhub.dragonCore.entityEngine.entity.Status;
 import net.anonhub.dragonCore.engine.interfaces.IDisplayable;
 import net.anonhub.dragonCore.engine.interfaces.ITickable;
-import net.anonhub.dragonCore.entityEngine.entity.Status;
 
-import static net.anonhub.dragonCore.engine.Settings.difficulty;
 import static net.anonhub.dragonCore.engine.Settings.display;
 
 public class Experience implements ITickable, IDisplayable {
 
-    public final int experienceCap = 2016400*difficulty+100;
+    // TODO num * difficulty + 100
+    // num is the max amount of xp that rounds out when character is maxed
+    public final int experienceCap = 2016400+100;
 
 
 
@@ -132,14 +132,18 @@ public class Experience implements ITickable, IDisplayable {
 
     @Override
     public void tick() {
-        level = (int) Math.sqrt((double) (experience - 100) / difficulty);
+        // TODO (int) Math.sqrt((double) (experience - 100) / difficulty)
+        level = (int) Math.sqrt((double) (experience - 100));
         tier = level /20;
         ascendance = tier /8;
 
-        experienceToNextLevel = (int) (difficulty * Math.pow(level+1, 2)) - (int) (difficulty * Math.pow(level, 2));
-        if (level == 0) {experienceToNextLevel=(difficulty+100);}
+        // TODO  (int) (difficulty * Math.pow(level+1, 2)) - (int) (difficulty * Math.pow(level, 2))
+        experienceToNextLevel = (int) (Math.pow(level+1, 2)) - (int) (Math.pow(level, 2));
+        // TODO (level == 0) {experienceToNextLevel=(difficulty+100);}
+        if (level == 0) {experienceToNextLevel=(100);}
 
-        levelExperience = experience - (int) (difficulty*Math.pow(level, 2)+100);
+        // TODO (int) (difficulty*Math.pow(level, 2)+100);
+        levelExperience = experience - (int) (Math.pow(level, 2)+100);
         if (level == 0) {levelExperience=experience;}
 
         displayLevel = level - (tier * 20);

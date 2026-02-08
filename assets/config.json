@@ -1,0 +1,28 @@
+{
+  "difficulty": {
+    "default":20,
+    "current":20,
+    "min":10,
+    "max":100
+  },
+  "tickSpeed": {
+    "current":20,
+    "default":20
+  },
+  "version": {
+    "current": "0.0.0"
+  },
+  "actions": {
+    "quit":[111],
+
+    "exit":[111],
+    "openTerminal":[66],
+
+    "sprint":[59, 60],
+    "moveDown":[47, 20],
+    "moveRight":[32, 22],
+    "moveLeft":[29, 21],
+    "moveUp":[51, 19]
+  }
+}
+

@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import net.anonhub.dragonCore.engine.interfaces.IKeyMethod;
 import net.anonhub.dragonCore.entityEngine.Entity;
 import net.anonhub.dragonCore.guiEngine.Terminal;
-import net.anonhub.dragonCore.moddingEngine.Modder;
+import net.anonhub.dragonCore.gameEngine.Gamer;
 import net.anonhub.dragonCore.tagEngine.Tag;
 import net.anonhub.dragonCore.tagEngine.Tags;
 
@@ -28,7 +28,7 @@ public class Main extends ApplicationAdapter {
     private static Renders renders;
     public static DataDisplay dataDisplay;
     public static Terminal terminalInput;
-    public static Modder modder;
+    public static Gamer gamer;
 
     @Override
     public void create() {
@@ -86,8 +86,8 @@ public class Main extends ApplicationAdapter {
 
         });
 
-        modder = new Modder(renders);
-        modder.mod();
+        gamer = new Gamer(renders);
+        gamer.loadGame();
     }
 
     @Override

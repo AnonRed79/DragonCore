@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static net.anonhub.dragonCore.engine.Settings.config;
 import static net.anonhub.dragonCore.engine.Settings.previousTick;
 import static net.anonhub.dragonCore.engine.interfaces.ITickable.tickables;
 
@@ -16,7 +15,7 @@ public class Ticker {
 
     public boolean ticking = false;
 
-    public byte tickSettings = Settings.config.getByteSingle("tickSpeed/current");
+    public byte tickSettings = Settings.config.tickSpeed.current;
 
     public long tickInterval = 1000L/tickSettings;
 

@@ -1,11 +1,9 @@
 package net.anonhub.dragonCore.entityEngine;
 
+import net.anonhub.dragonCore.engine.Settings;
 import net.anonhub.dragonCore.engine.interfaces.IDisplayable;
-import net.anonhub.dragonCore.engine.interfaces.ITickable;
 import net.anonhub.dragonCore.entityEngine.entity.Status;
 import net.anonhub.dragonCore.entityEngine.interfaces.IEffect;
-
-import static net.anonhub.dragonCore.engine.Settings.config;
 
 public class Effect implements IDisplayable {
     public Status status;
@@ -36,7 +34,8 @@ public class Effect implements IDisplayable {
         this.onApply = effect.onApply;
         this.onEnd = effect.onEnd;
         this.strength = strength;
-        this.duration = duration*config.getByteSingle("tickSpeed/current");
+        // TODO duration*tickSpeed
+        this.duration = duration;
     }
 
     public int getDuration() {

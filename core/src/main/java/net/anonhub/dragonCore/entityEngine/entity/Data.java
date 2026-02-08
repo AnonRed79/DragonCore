@@ -1,6 +1,6 @@
 package net.anonhub.dragonCore.entityEngine.entity;
 
-import net.anonhub.commonlib.Direction;
+import net.anonhub.dragonlib.Direction;
 import net.anonhub.dragonCore.entityEngine.Entity;
 import net.anonhub.dragonCore.engine.interfaces.IDisplayable;
 import net.anonhub.dragonCore.engine.interfaces.ITickable;
